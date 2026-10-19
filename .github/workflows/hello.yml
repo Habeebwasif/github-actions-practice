@@ -34,8 +34,8 @@ jobs:
         run: ls -la
 
     # step - demo
-      - name: break it on purpose
-        run: ehco "this will fail"
+    # - name: break it on purpose
+    #   run: ehco "this will fail"
 
     # step 6
       - name: print runner os
