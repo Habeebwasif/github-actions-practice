@@ -33,6 +33,10 @@ jobs:
       - name: list files in repo
         run: ls -la
 
+    # step - demo
+      - name: break it on purpose
+        run: ehco "this will fail"
+
     # step 6
       - name: print runner os
         run: echo "Running on:" ${{ runner.os }}
