@@ -1,13 +1,38 @@
+# workflow name
 name: Hello yaml
+
+# trigger event on every push
 on:
   push:
-     
+
+# jobs to run in this workflow
 jobs:
   greet:
+
+  # specify the machine runner (OS)
     runs-on: ubuntu-latest
+    
     steps:
+    # step 1 - pre-built code check
       - name: code checkout
         uses: actions/checkout@v4 
-
+        
+    # step 2
       - name: greets user
         run: echo "Hello from GitHub Actions!" 
+
+    # step 3
+      - name: print date and time
+        run: date
+
+    # step 4
+      - name: branch name (which triggered)
+        run: echo "Branch:" ${{ github.ref_name }}
+
+    # step 5
+      - name: list files in repo
+        run: ls -la
+
+    # step 6
+      - name: print runner os
+        run: echo "Running on:" ${{ runner.os }}
