@@ -3,7 +3,8 @@ name: Hello yaml
 
 # trigger event on every push
 on:
-  push:
+  workflow_dispatch:
+  #push:
 
 # jobs to run in this workflow
 jobs:
