@@ -1,6 +1,5 @@
 name: pr-check-req
 on: 
-  workflow_dispatch:
   pull_request: 
     branches: [main]
     types: [opened, synchronize] #runs when a PR is opened
