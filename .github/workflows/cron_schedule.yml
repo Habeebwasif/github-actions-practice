@@ -1,0 +1,16 @@
+name: cron-schedule-job
+
+on: 
+  workflow_dispatch:
+  # schedule: 
+      # - cron: '0 0 * * *' # Cron expression to run everyday at midnight
+jobs:
+  scheduled-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: greet
+        run: echo "Hello, A new day has begun!" 
+    
+  
+  
+  
