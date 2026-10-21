@@ -1,0 +1,21 @@
+name: manual-trigger workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'select the environment you want'
+        required: true
+        default: 'dev'
+        type: choice
+        options: 
+          - dev
+          - stg
+          - prod
+
+jobs:
+  show-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print selected environment
+        run: echo "selected environment is ${{ inputs.environment }}"
