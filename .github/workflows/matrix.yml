@@ -1,0 +1,33 @@
+name: Matrix strategy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build: 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: 
+          - "3.10"
+          - "3.11"
+          - "3.12"
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+        exclude:
+          - os: "windows-latest"
+            python-version: "3.11"
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: ${{ matrix.python-version }}  
+
+      - name: trigger failure of one job
+        if: ${{ matrix.os == 'windows-latest' && matrix.python-version == '3.10'}}
+        run: exit 1
+        
+      - name: Display Python version
+        run: python --version
