@@ -2,8 +2,6 @@
 
 A simple Python e-commerce web app, containerized with Docker and tested automatically with GitHub Actions.
 
-![CI](https://github.com/Habeebwasif/github-actions-practice/actions/workflows/ci.yml/badge.svg)
-
 ## Features
 
 - Python web app served with Gunicorn
