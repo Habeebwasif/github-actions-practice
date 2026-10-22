@@ -1,0 +1,24 @@
+name: github-hosted runner
+
+on:
+    push:
+
+jobs: 
+    os-info: 
+        strategy:
+            matrix:
+               os: [ubuntu-latest, macos-latest, windows-latest]
+        runs-on: ${{ matrix.os }}
+        steps:
+            
+            - name: print OS name
+              run: echo "OS Name:" ${{ runner.os }}
+
+            - name: print Runner's hostname
+              run: echo "Runner's Hostname:" ${{ runner.name }}
+
+            - name: print current user running the job
+              run: echo "Current User:" $(whoami)
+
+    
+
