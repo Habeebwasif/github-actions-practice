@@ -19,13 +19,5 @@ jobs:
 
             - name: print current user running the job
               run: echo "Current User:" $(whoami)
-
-            - name: Check Tool Versions
-              run: |
-                docker --version
-                python3 --version
-                node --version
-                git --version
-
     
 
