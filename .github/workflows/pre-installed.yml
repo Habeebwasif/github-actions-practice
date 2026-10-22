@@ -1,4 +1,4 @@
-name: github-hosted runner
+name: check preinstalled tools
 
 on:
     workflow_dispatch:
