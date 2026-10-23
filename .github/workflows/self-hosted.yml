@@ -1,6 +1,6 @@
-name: self-hosted runner
+name: self-hosted runner 
 
-on:
+on: 
     push:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
             - name: print the working directory
               run: echo "Working Directory:" ${{ github.workspace }}
 
-            - name: create a file and verifty it exists
+            - name: create a file and verify it exists
               run: |
                 echo "Hello, Habeeb!!" > hello.txt
                 if [ -f hello.txt ]; then
