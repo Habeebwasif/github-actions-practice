@@ -15,7 +15,7 @@ jobs:
 
             - name: create a file and verifty it exists
               run: |
-                echo "Hello, Habeeb!" > hello.txt
+                echo "Hello, Habeeb!!" > hello.txt
                 if [ -f hello.txt ]; then
                     echo "File created successfully."
                 else
