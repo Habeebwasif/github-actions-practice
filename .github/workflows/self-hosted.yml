@@ -1,7 +1,7 @@
 name: self-hosted runner 
 
 on: 
-    push:
+    workflow_dispatch:
 
 jobs:
     demo: 
