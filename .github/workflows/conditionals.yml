@@ -1,0 +1,27 @@
+name: conditionals demoo
+
+on: 
+    push
+
+jobs:
+  branch-condition:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run on main only
+        if: github.ref == 'refs/heads/main'
+        run: echo "On main, Hello!"
+
+      - name: step allowed to fail
+        id: fail
+        continue-on-error: true
+        run: exit 1
+
+      - name: Previous step failed
+        if: steps.fail.outcome == 'failure'
+        run: echo "Running bcoz, Previous step failed"
+
+  push-only-condition:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running on Push event only"
