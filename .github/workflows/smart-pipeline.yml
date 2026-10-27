@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
-        run: echo "Running the tests..."
+        run: echo "Running the tests..." #both run parallel
 
   summary:
     needs: [lint, test]
