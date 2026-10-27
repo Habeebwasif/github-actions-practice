@@ -1,27 +1,44 @@
-name: conditionals demoo
+name: conditions demo
 
-on: 
-    push
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
 
 jobs:
-  branch-condition:
+  # 1,2: branch condition and failure()
+  check-conditions:
     runs-on: ubuntu-latest
     steps:
-      - name: run on main only
+      - name: Print on main only
         if: github.ref == 'refs/heads/main'
-        run: echo "On main, Hello!"
+        run: echo "hello from main"
 
-      - name: step allowed to fail
-        id: fail
-        continue-on-error: true
+      - name: Real failure (manual runs only)
+        if: github.event_name == 'workflow_dispatch'
         run: exit 1
 
-      - name: Previous step failed
-        if: steps.fail.outcome == 'failure'
-        run: echo "Running bcoz, Previous step failed"
+      - name: Running if previous failed
+        if: failure()
+        run: echo "Previous step failed"
 
-  push-only-condition:
+  # 3: push only
+  on-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Running on Push event only"
+      - name: Running on push
+        run: echo "This runs on push"
+
+  # 4: continue-on-error
+  on-error:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failing step
+        id: fail
+        continue-on-error: true
+        run: python ---version
+
+      - name: Running on error
+        if: steps.fail.outcome == 'failure'
+        run: echo "The previous step failed, but the job continued"
