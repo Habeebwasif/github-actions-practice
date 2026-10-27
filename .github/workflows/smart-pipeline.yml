@@ -1,0 +1,37 @@
+name: smart-pipeline
+
+on:
+  push:
+    branches: ['**'] #triggers on a push to any branch including e.g.feature/login
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run lint
+        run: echo "Linting the code..."
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "Running the tests..."
+
+  summary:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print branch type
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "This is a MAIN branch push"
+          else
+            echo "This is a FEATURE branch push (${{ github.ref_name }})"
+          fi
+
+      - name: Print commit message
+        env:
+          COMMIT_MSG: ${{ github.event.commits[0].message }}    #the first commit message in the push event
+         # COMMIT_MSG:  ${{ github.event.head_commit.message }} #return latest commit message
+        run: 
+            echo "Commit message:" $COMMIT_MSG
