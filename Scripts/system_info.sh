@@ -54,4 +54,4 @@ main() {
 main
 
 # intentional failure to test CI
-exit 1
+# exit 1
