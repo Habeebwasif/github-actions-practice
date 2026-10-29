@@ -17,8 +17,8 @@ jobs:
           sudo apt-get install -y procps
 
       - name: Give permission
-        run: chmod +x scripts/system_info.sh
+        run: chmod +x Scripts/system_info.sh
 
       - name: Run the script
-        run: ./scripts/system_info.sh
+        run: ./Scripts/system_info.sh
         shell: bash
