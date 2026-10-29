@@ -7,7 +7,7 @@ jobs:
     upload-artifact:
         runs-on: ubuntu-latest
         steps:
-            - name: Create test report with demo file
+            - name: Create test report with file
               run: |
                 mkdir testreport
                 echo "GitHub Actions Artifact Demo" > testreport/day44-report.txt

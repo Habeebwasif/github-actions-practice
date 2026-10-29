@@ -1,0 +1,35 @@
+name: Download Artifact Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: create report file
+        run: |
+          echo "This report is created by Job 1." > report.txt
+          echo "date: $(date)" >> report.txt
+
+      - name: upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: file
+          path: report.txt
+
+  use-report:
+    needs: generate-report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: download report
+        uses: actions/download-artifact@v4
+        with:
+          name: file
+          path: recent-downloaded-report
+
+      - name: print and display report
+        run: |
+          cat recent-downloaded-report/report.txt
