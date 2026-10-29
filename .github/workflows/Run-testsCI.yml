@@ -1,0 +1,24 @@
+name: Real CI test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y procps
+
+      - name: Give permission
+        run: chmod +x scripts/system_info.sh
+
+      - name: Run the script
+        run: ./scripts/system_info.sh
+        shell: bash
