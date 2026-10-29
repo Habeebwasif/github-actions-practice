@@ -1,10 +1,11 @@
 #!/bin/bash
+set -eu
 
-# functionn 1: System info & hostname
-sys_info(){
-	echo "HostName : $(hostname)"
-	echo "Kernel   : $(uname -r)"
-	echo "OS       : $(grep -E '^(NAME|VERSION)=' /etc/os-release)"
+# function 1: System info & hostname
+sys_info() {
+    echo "HostName : $(hostname)"
+    echo "Kernel   : $(uname -r)"
+    echo "OS       : $(grep -E '^(NAME|VERSION)=' /etc/os-release)"
 }
 
 # function 2: Uptime
@@ -51,3 +52,6 @@ main() {
 }
 
 main
+
+# intentional failure to test CI
+exit 1
