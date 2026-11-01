@@ -1,0 +1,41 @@
+name: 'Setup and Greet'
+description: 'Prints a greeting, the date and the runner OS'
+
+inputs:
+  name:
+    description: 'Name of the person to greet'
+    required: true
+  language:
+    description: 'Greeting language (en, hi, fr)'
+    required: false
+    default: 'en'
+
+outputs:
+  greeted:
+    description: 'Whether the greeting was printed'
+    value: ${{ steps.greet.outputs.greeted }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Print greeting
+      id: greet
+      shell: bash
+      env:
+        NAME: ${{ inputs.name }}
+        LANGUAGE: ${{ inputs.language }}
+      run: |
+        case "$LANGUAGE" in
+          en) GREETING="Hello" ;;
+          hi) GREETING="Namaste" ;;
+          fr) GREETING="Bonjour" ;;
+          *)  GREETING="Hello" ;;
+        esac
+        echo "$GREETING, $NAME!"
+        echo "greeted=true" >> "$GITHUB_OUTPUT"
+
+    - name: Print date and runner OS
+      shell: bash
+      run: |
+        echo "Current date: $(date)"
+        echo "Runner OS: ${{ runner.os }}"
