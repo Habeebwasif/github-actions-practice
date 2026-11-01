@@ -35,11 +35,13 @@ jobs:
       - name: App name & environment
         run: echo  "Building ${{ inputs.app_name }} for  ${{ inputs.environment }}"
 
-      - name: Check docker token 
+      - name: Check docker token
+        env:
+          DOCKER_TOKEN: ${{ secrets.docker_token }}
         run: |
           if [ -n "$DOCKER_TOKEN" ]; then
             echo "Docker token is set: true"
           else
             echo "Docker token is set: false"
           fi
-          echo "Length: ${#DOCKER_TOKEN}"
+          
