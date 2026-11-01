@@ -13,7 +13,7 @@ jobs:
 
       - name: Run custom action
         id: hello
-        uses: ./.github/actions/setup-and-greet/action.yml
+        uses: ./.github/actions/setup-and-greet
         with:
           name: Habeeb
           language: es
