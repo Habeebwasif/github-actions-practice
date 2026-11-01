@@ -1,0 +1,22 @@
+name: use-greet
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Run custom action
+        id: hello
+        uses: ./.github/actions/setup-and-greet/action.yml
+        with:
+          name: Habeeb
+          language: es
+
+      - name: Show output
+        run: echo "Greeted:" ${{ steps.hello.outputs.greeted }}
