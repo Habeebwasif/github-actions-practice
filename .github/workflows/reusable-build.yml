@@ -1,0 +1,44 @@
+name: Reusable workflow
+
+on:
+  workflow_call:
+
+    inputs:
+
+      app_name:
+        description: 'name of your app'
+        type: string
+        required: true
+
+      environment:
+        description: 'Environment to deploy to'
+        type: string
+        default: 'staging'
+        required: true
+
+    secrets:
+
+      docker_token:
+        description: 'Docker token for authentication'
+        required: true
+
+jobs:
+  
+  reusable:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out the code
+        uses: actions/checkout@v7
+
+      - name: App name & environment
+        run: echo  "Building ${{ inputs.app_name }} for  ${{ inputs.environment }}"
+
+      - name: Check docker token 
+        run: |
+          if [ -z ${{ secrets.docker_token }} ]; then
+            echo "Docker token is set: true"
+          else
+            echo "Docker token is set: false"
+          fi
