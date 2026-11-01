@@ -42,3 +42,4 @@ jobs:
           else
             echo "Docker token is set: false"
           fi
+          echo "Length: ${#DOCKER_TOKEN}"
