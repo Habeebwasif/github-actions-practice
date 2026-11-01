@@ -1,0 +1,14 @@
+name: caller-workflow
+
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      app_name: "My App"
+      environment: "Production"
+    secrets:
+      docker_token: ${{ secrets.DOCKER_TOKEN }}
