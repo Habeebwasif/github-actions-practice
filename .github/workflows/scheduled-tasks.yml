@@ -23,6 +23,7 @@ jobs:
       - name: Health check
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://trainwithshubham.ai) 
+          echo "Response code: $STATUS"
           if [ "$STATUS" -ne 200 ]; then     
             exit 1                           
           fi
