@@ -13,17 +13,16 @@ jobs:
     steps:
       - name: Show schedule
         run: |
-            if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-                echo "Workflow was triggered manually"
+            if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then # only for testing
+                echo "Workflow was triggered manually" 
             else
-                echo "Workflow was triggered by schedule"
+                echo "Workflow was triggered by schedule" 
                 echo "Cron: ${{ github.event.schedule }}"
             fi  
 
       - name: Health check
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://trainwithshubham.ai/)   # Get only the status code
-          echo "Response code: $STATUS"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://trainwithshubham.ai/) 
           if [ "$STATUS" -ne 200 ]; then      # Anything other than 200 = problem
             exit 1                            # Fail the job
           fi
