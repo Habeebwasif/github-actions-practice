@@ -1,0 +1,28 @@
+name: Scheduled Tasks
+
+on:
+  schedule:
+    - cron: '30 2 * * 1' # Run at 2:30 AM every Monday         
+    - cron: '0 */6 * * *'   # Run every 6 hours 
+  workflow_dispatch: # testing it manually w/o waiting for the schedule
+
+jobs:
+  scheduled-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show schedule
+        run: echo "Triggered by ${{ github.event.schedule }}"  
+
+      - name: Health check
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://api.github.com)   # Get only the status code
+          echo "Response code: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then      # Anything other than 200 = problem
+            exit 1                            # Fail the job
+          fi
+
+# `curl` sends an HTTP request to the URL.
+# `-s` is silent mode, so it hides the progress bar.
+# `-o /dev/null` throws away the page content
+# `-w "%{http_code}"` tells curl to print only the HTTP status code of the response.

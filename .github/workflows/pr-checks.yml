@@ -1,0 +1,64 @@
+name: Real world PR-gate
+
+on:
+  #workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  file-size-check:
+    runs-on: ubuntu-latest
+
+    steps:
+     
+      - name: code checkout                                                 # Download the repo onto the runner
+        uses: actions/checkout@v7                                           # Prebuilt action that does the git checkout
+        with:
+          fetch-depth: 0                                                    # Get full history so origin/main exists for the diff
+
+      - name: Check file size                                              
+        run: |
+          Files=$(git diff --name-only origin/${{ github.base_ref }} HEAD)    # List files changed in the PR (base_ref = main)
+
+          for file in $Files; do                                              # Loop over each changed file
+            if [ -f "$file" ]; then               # Skip deleted files (they don't exist on disk)
+              SIZE=$(stat -c%s "$file")           # Get file size in bytes
+              if [ $SIZE -gt 1048576 ]; then      # 1048576 bytes = 1 MB. Is the file bigger?
+                echo "File is larger than 1 MB"   # Print the problem
+                exit 1                            # Exit with error, so the job FAILS
+              fi
+              echo "File is within limits"        # Size is fine, move to next file
+            fi
+          done
+
+  branch-name-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check pattern
+        run: |
+          branch=${{ github.head_ref }}                                    # head_ref = the PR's source branch (e.g. feature/login)
+          pattern="^(feature|fix|docs)\/.*"                                # Regex-pattern: must start with feature/, fix/ or docs/
+
+          if [[ ! "$branch" =~ $pattern ]]; then                               # If the branch name does NOT match the pattern...
+            echo "Invalid branch - (please use feature/*, fix/*, or docs/*)"   # Show a helpful error
+            exit 1                                                             # ...fail the job
+          else
+            echo "Valid branch"                                                 # Name matches, job passes
+          fi
+
+
+  pr-body-check:
+    runs-on: ubuntu-latest
+
+    steps:
+     
+      - name: Check description
+        run: |
+          des="${{ github.event.pull_request.body }}"                                    # Store the PR description in a variable
+          if [ -z "$des" ]; then                                                         # -z checks whether the text is empty
+            echo "WARNING: Description is empty. Please write description."              # Only a warning, no exit 1
+          else                                                                           # the job still passes either way
+            echo "Description: $des"                                                     # Print the description in the logs
+          fi
