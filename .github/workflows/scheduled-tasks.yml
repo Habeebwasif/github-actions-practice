@@ -22,9 +22,9 @@ jobs:
 
       - name: Health check
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://trainwithshubham.ai/) 
-          if [ "$STATUS" -ne 200 ]; then      # Anything other than 200 = problem
-            exit 1                            # Fail the job
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://trainwithshubham.ai) 
+          if [ "$STATUS" -ne 200 ]; then     
+            exit 1                           
           fi
 
 # `curl` sends an HTTP request to the URL.
