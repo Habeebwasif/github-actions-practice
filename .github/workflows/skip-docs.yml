@@ -10,7 +10,7 @@ on:
       - 'docs/**'
  
 jobs:
-  build:
+  skip-docs:
     runs-on: ubuntu-latest
  
     steps:
