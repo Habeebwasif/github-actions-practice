@@ -1,0 +1,20 @@
+name: Skip Docs-Only Changes
+ 
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Show what triggered this run
+        run: |
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered because something other than docs changed"
