@@ -2,8 +2,8 @@ name: conditions demo
 
 on:
   workflow_dispatch:
-  push:
-  pull_request:
+  # push:
+  # pull_request:
 
 jobs:
   # 1,2: branch condition and failure()

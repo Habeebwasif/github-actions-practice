@@ -1,8 +1,9 @@
 name: smart-pipeline
 
 on:
-  push:
-    branches: ['**'] #triggers on a push to any branch including e.g.feature/login
+  workflow_dispatch:
+  # push:
+  #   branches: ['**'] #triggers on a push to any branch including e.g.feature/login
 
 jobs:
   lint:
