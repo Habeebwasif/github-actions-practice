@@ -1,0 +1,17 @@
+name: External Trigger
+ 
+on:
+  repository_dispatch:
+    types: [deploy-request]       # Only reacts to this event type
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Print the client payload
+        env:
+          ENVIRONMENT: ${{ github.event.client_payload.environment }}  # payload comes from outside, value sent by the caller
+        run: |
+          echo "Event type: ${{ github.event.action }}"
+          echo "Environment: $ENVIRONMENT"
