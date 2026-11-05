@@ -1,0 +1,29 @@
+name: Deploy After Tests
+
+on:
+  workflow_run:
+    workflows: ["Run Tests"]      # "name:" should match the name in tests.yml exactly
+    types: [completed]            # this fires on success AND failure
+
+jobs: 
+    #conditioonal
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Tests passed, deploying..."
+          echo "Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Commit: ${{ github.event.workflow_run.head_sha }}"
+
+  skip-deploy:
+    if: ${{ github.event.workflow_run.conclusion != 'success' }}
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Warn and stop
+        run: |
+          echo "::warning::Tests did not succeed (${{ github.event.workflow_run.conclusion }}). Skipping deploy."
+          exit 0
